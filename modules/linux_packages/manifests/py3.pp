@@ -52,7 +52,7 @@ class linux_packages::py3 {
             path     => '/bin:/usr/bin/:/sbin:/usr/sbin',
             cwd      => '/opt/relops_py3915/',
             provider => shell,
-            unless   => '/usr/bin/dpkg --list | /bin/grep python3.9 | /bin/grep 3.9.15 && /usr/bin/python3.9 -c "import distutils"',
+            unless   => '/usr/bin/dpkg --list | /bin/grep python3.9 | /bin/grep 3.9.15 && /usr/bin/python3 -c "import distutils"',
           }
 
           # configure alternatives
