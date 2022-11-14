@@ -24,6 +24,14 @@ class linux_packages::py3 {
             owner  => 'root',
           }
 
+          file { 'py3915 install script':
+            ensure => present,
+            group  => 'root',
+            mode   => '0755',
+            owner  => 'root',
+            source => "puppet:///modules/${module_name}/py3915_install.sh",
+          }
+
           $py39_urls = {
             # base
             '/opt/relops_py3915/python3.9_3.9.15-1+bionic1_amd64.deb' => { source => 'https://ronin-puppet-package-repo.s3.us-west-2.amazonaws.com/linux/public/common/py39/1804/python3.9_3.9.15-1%2Bbionic1_amd64.deb' },
@@ -48,7 +56,7 @@ class linux_packages::py3 {
           })
 
           exec { 'install py39':
-            command  => '/usr/bin/dpkg -i *.deb',
+            command  => '/opt/relops_py3915/py3915_install.sh',
             path     => '/bin:/usr/bin/:/sbin:/usr/sbin',
             cwd      => '/opt/relops_py3915/',
             provider => shell,
