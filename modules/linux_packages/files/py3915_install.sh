@@ -7,7 +7,8 @@ set -e
 
 apt remove libpython3.9-minimal libpython3.9-stdlib -y
 
-# created with https://github.com/starkandwayne/install-debs-in-order
+# order matters
+#   created with https://github.com/starkandwayne/install-debs-in-order
 dpkg -i libpython3.9-minimal_3.9.15-1+bionic1_amd64.deb
 dpkg -i python3.9-lib2to3_3.9.15-1+bionic1_all.deb
 dpkg -i libpython3.9-stdlib_3.9.15-1+bionic1_amd64.deb
