@@ -24,7 +24,7 @@ class linux_packages::py3 {
             owner  => 'root',
           }
 
-          file { 'py3915 install script':
+          file { '/opt/relops_py3915/py3915_install.sh':
             ensure => present,
             group  => 'root',
             mode   => '0755',
