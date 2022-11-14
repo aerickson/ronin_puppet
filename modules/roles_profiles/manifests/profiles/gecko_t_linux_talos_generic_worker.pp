@@ -41,6 +41,7 @@ class roles_profiles::profiles::gecko_t_linux_talos_generic_worker {
                 telegraf_password => lookup('telegraf.password'),
                 puppet_repo       => 'https://github.com/aerickson/ronin_puppet.git',
                 puppet_branch     => 'moonshot_py_and_gw_PINNED',
+                puppet_env        => 'aerickson',
                 # Note the camelCase key names
                 meta_data         => {
                     workerType    => $worker_type,
