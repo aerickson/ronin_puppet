@@ -19,13 +19,22 @@ class roles_profiles::profiles::ntp {
           }
         }
         '22.04': {
+          $ntp_server = lookup('ntp_server', String)
+
           # not working
-          # $ntp_server = lookup('ntp_server', String)
           # class { 'ntp':
-          #     servers => [$ntp_server]
+          #   servers => [$ntp_server],
           # }
 
-          fail("Not implemeted for 2204 ${facts['os']['release']['full']}")
+          class { 'systemd':
+            manage_timesyncd => true,
+            ntp_server       => [$ntp_server],
+          }
+
+          # TODO: use timesync
+          #   https://ubuntu.com/server/docs/network-ntp
+
+          # fail("Not implemeted for 2204 ${facts['os']['release']['full']}")
         }
         default: {
           fail("Unrecognized Ubuntu version ${facts['os']['release']['full']}")
