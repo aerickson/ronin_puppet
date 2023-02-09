@@ -19,22 +19,22 @@ class roles_profiles::profiles::ntp {
           }
         }
         '22.04': {
+          # https://ubuntu.com/server/docs/network-ntp
+          # NOTE: timesyncd isn't as advanced as ntpd, see if we need to go to ntpd
+
+          # edit /usr/lib/systemd/system/systemd-timesyncd.service
+          #   remove "ConditionVirtualization=!container"
+          file_line { 'modify systemd-timesyncd.service':
+            path  => '/usr/lib/systemd/system/systemd-timesyncd.service',
+            line  => 'ConditionVirtualization=',
+            match => '^ConditionVirtualization.*$',
+          }
+
           $ntp_server = lookup('ntp_server', String)
-
-          # not working
-          # class { 'ntp':
-          #   servers => [$ntp_server],
-          # }
-
           class { 'systemd':
             manage_timesyncd => true,
             ntp_server       => [$ntp_server],
           }
-
-          # TODO: use timesync
-          #   https://ubuntu.com/server/docs/network-ntp
-
-          # fail("Not implemeted for 2204 ${facts['os']['release']['full']}")
         }
         default: {
           fail("Unrecognized Ubuntu version ${facts['os']['release']['full']}")

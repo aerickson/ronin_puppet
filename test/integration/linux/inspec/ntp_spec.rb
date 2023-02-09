@@ -7,9 +7,15 @@ describe command('timedatectl status') do
   its(:stdout) { should match /systemd-timesyncd.service active: yes/ }
 end
 
+# on 22.04, we use timesyncd
 only_if { os[:family] == 'ubuntu' && os[:release] == '22.04' }
 describe command('timedatectl status') do
   its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /NTP service: active/ }
+end
 
-  # TODO: check output if we're synced. For 22.04 the output has changed.
+only_if { os[:family] == 'ubuntu' && os[:release] == '22.04' }
+describe command("systemctl status systemd-timesyncd") do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /Active: active/ }
 end
