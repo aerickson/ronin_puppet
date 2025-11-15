@@ -61,7 +61,7 @@ class puppet::atboot (
               group   => 'root',
               source  => 'puppet:///modules/puppet/puppet_2404.service',
               notify  => Exec['reload systemd'],
-              require => Class['linux_packages::puppet'];
+              require => Class['linux_packages::openvox'];
             '/usr/local/bin/run-puppet.sh':
               owner   => 'root',
               group   => 'root',
